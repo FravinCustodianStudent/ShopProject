@@ -24,11 +24,11 @@ namespace Fravin.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> objList = _db.Product;
-            foreach (var item in objList)
-            {
-                item.Category = _db.Category.FirstOrDefault(u => u.Id == item.Id);
-            }
+            IEnumerable<Product> objList = _db.Product.Include(u=>u.Category);
+            //foreach (var item in objList)
+            //{
+            //    item.Category = _db.Category.FirstOrDefault(u => u.Id == item.Id);
+            //}
             return View(objList);
         }
         //Get - Upsert
