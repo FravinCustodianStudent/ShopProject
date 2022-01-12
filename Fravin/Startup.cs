@@ -29,6 +29,13 @@ namespace Fravin
             options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")
                 ));
+            services.AddHttpContextAccessor();
+            services.AddSession(Option =>
+            {
+                Option.IdleTimeout = TimeSpan.FromMinutes(10);
+                Option.Cookie.HttpOnly = true;
+                Option.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews();
         }
 
@@ -52,7 +59,7 @@ namespace Fravin
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
