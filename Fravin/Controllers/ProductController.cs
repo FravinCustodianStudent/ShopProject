@@ -1,6 +1,8 @@
 ﻿using Fravin.Data;
 using Fravin.Models;
+using Fravin.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,19 +28,34 @@ namespace Fravin.Controllers
         //Get - Upsert
         public IActionResult Upsert(int? id)
         {
-            Product product = new Product();
-            if (id == null)
+            //IEnumerable<SelectListItem> CategoryDropDown = _db.Category.Select(i => new SelectListItem
+            //{
+            //    Text = i.Name,
+            //    Value = i.Id.ToString()
+            //});
+            //ViewBag.CategoryDropDown = CategoryDropDown;
+            //Product product = new Product();
+            ProductVM productVM = new ProductVM()
             {
-                    return View(product);
+                Product = new Product(),
+                CategorySelectList = _db.Category.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
+            if (id == null || id== 0)
+            {
+                    return View(productVM);
             }
             else
             {
-                product = _db.Product.Find(id);
-                if (product == null)
+                productVM.Product = _db.Product.Find(id);
+                if (productVM.Product == null)
                 {
                     return NotFound();
                 }
-                return View(product);
+                return View(productVM);
             }
             return View();
         }
