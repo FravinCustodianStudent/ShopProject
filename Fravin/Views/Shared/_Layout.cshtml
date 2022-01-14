@@ -25,7 +25,9 @@
                     
                     <ul class="navbar-nav flex-grow-1">
                          <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+        @if (User.IsInRole(WC.AdminRole)) {
+
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
             Content Managment
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -34,8 +36,12 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Create Admin User</a></li>
           </ul>
+          }
         </li>
 
+
+                            
+        
         <li>
             @if (HttpContextAccessor.HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart)!=null)
              {
