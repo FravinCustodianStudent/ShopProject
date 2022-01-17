@@ -1,5 +1,5 @@
-using Fravin.Data;
-using Fravin.Utility;
+using Fravin_DataAccess.Data;
+using Fravin_Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

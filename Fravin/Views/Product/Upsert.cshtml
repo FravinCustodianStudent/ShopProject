@@ -1,5 +1,5 @@
-﻿@model Fravin.Models.ViewModels.ProductVM
-
+﻿@model Fravin_Models.ViewModels.ProductVM
+@using Fravin_Utility
 @{
     var title = "Create Product";
 }
@@ -10,7 +10,7 @@
         <input asp-for="Product.Id" hidden />
     }
 
-	<div class="border p-3">
+	<div class="border p-3 bg-white">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 		<div class="btn-group row">
 			<h2 class="text-info pl-3">@title</h2>
@@ -79,7 +79,7 @@
                         
                     </div>
                     <div class="col-8">
-                        <select asp-for="Product.CategoryId" asp-items="@Model.CategorySelectList" class="form-control" >
+                        <select asp-for="Product.CategoryId" asp-items="@Model.CategorySelectList" class="form-select" >
                         <option disabled selected >--Select Category--</option>
                         </select>
                         <span asp-validation-for ="Product.CategoryId" class="text-danger"></span>

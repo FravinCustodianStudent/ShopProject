@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fravin", "Fravin\Fravin.csproj", "{D90D15A4-827C-4BCE-B098-651203FB5989}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fravin", "Fravin\Fravin.csproj", "{D90D15A4-827C-4BCE-B098-651203FB5989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fravin_Utility", "Fravin_Utility\Fravin_Utility.csproj", "{859325B1-91F0-4D6F-BE76-4290CCEAA9E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fravin_Models", "Fravin_Models\Fravin_Models.csproj", "{E971ED36-3408-4E80-B471-A372BA59E138}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fravin_DataAccess", "Fravin_DataAccess\Fravin_DataAccess.csproj", "{8D105E4F-4635-44F3-A7E0-F0F266DF116B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{D90D15A4-827C-4BCE-B098-651203FB5989}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D90D15A4-827C-4BCE-B098-651203FB5989}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D90D15A4-827C-4BCE-B098-651203FB5989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{859325B1-91F0-4D6F-BE76-4290CCEAA9E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{859325B1-91F0-4D6F-BE76-4290CCEAA9E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{859325B1-91F0-4D6F-BE76-4290CCEAA9E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{859325B1-91F0-4D6F-BE76-4290CCEAA9E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E971ED36-3408-4E80-B471-A372BA59E138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E971ED36-3408-4E80-B471-A372BA59E138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E971ED36-3408-4E80-B471-A372BA59E138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E971ED36-3408-4E80-B471-A372BA59E138}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D105E4F-4635-44F3-A7E0-F0F266DF116B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D105E4F-4635-44F3-A7E0-F0F266DF116B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D105E4F-4635-44F3-A7E0-F0F266DF116B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D105E4F-4635-44F3-A7E0-F0F266DF116B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
