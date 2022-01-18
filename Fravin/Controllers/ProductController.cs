@@ -116,6 +116,7 @@ namespace Fravin.Controllers
                     }
                     _prodRepo.Update(productVM.Product);
                 }
+                TempData[WC.Success] = "Action completed succesfully";
             }
 
             _prodRepo.Save();
@@ -164,6 +165,7 @@ namespace Fravin.Controllers
             }
             _prodRepo.Remove(obj);
             _prodRepo.Save();
+            TempData[WC.Success] = "Action completed succesfully";
             return RedirectToAction("Index");
 
 

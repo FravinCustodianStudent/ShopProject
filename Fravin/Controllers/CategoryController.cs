@@ -36,8 +36,10 @@ namespace Fravin.Controllers
             {
                 _catRepo.Add(obj);
                 _catRepo.Save();
+                TempData[WC.Success] = "Category " + obj.Name + " succesfully created";
                 return RedirectToAction("Index");
             }
+            TempData[WC.Error] = "Error while creating category";
             return View(obj);
 
         }
@@ -64,8 +66,10 @@ namespace Fravin.Controllers
             {
                 _catRepo.Update(obj);
                 _catRepo.Save();
+                TempData[WC.Success] = "Action completed succesfully";
                 return RedirectToAction("Index");
             }
+            TempData[WC.Error] = "Something went wrong";
             return View(obj);
 
         }
@@ -96,8 +100,10 @@ namespace Fravin.Controllers
             // 
             if (obj == null)
             {
+                TempData[WC.Error] = "Something went wrong";
                 return NotFound();
             }
+            TempData[WC.Success] = "Action completed succesfully";
             _catRepo.Remove(obj);
             _catRepo.Save();
             return RedirectToAction("Index");

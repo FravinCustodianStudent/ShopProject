@@ -140,6 +140,7 @@ namespace Fravin.Controllers
                 _inqDRepo.Add(inquiryDetail);
             }
             _inqDRepo.Save();
+            TempData[WC.Success] = "Action completed succesfully";
             return RedirectToAction(nameof(InquairyConfirmation));
         }
         public IActionResult InquairyConfirmation()

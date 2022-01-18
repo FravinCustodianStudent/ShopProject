@@ -3,7 +3,6 @@
     text-align: center;
     word-break: break-all;
 }
-
 /* Provide sufficient contrast against white background */
 a {
     color: #0366d6;
@@ -233,4 +232,17 @@ body {
 .form-signup .social-login {
     width: 210px !important;
     margin: 0 auto;
+}
+/* Toastr */
+
+.toast-success {
+    background-color: #13d878 !important;
+}
+
+.toast-warning {
+    background-color: #357e45 !important;
+}
+
+.toast-error {
+    background-color: #3533a7 !important;
 }
