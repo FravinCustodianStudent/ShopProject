@@ -1,4 +1,5 @@
 ﻿using Fravin_DataAccess.Data;
+using Fravin_DataAccess.Repository.IRepository;
 using Fravin_Models;
 using Fravin_Models.ViewModels;
 using Fravin_Utility;
@@ -17,17 +18,17 @@ namespace Fravin.Controllers
     [Authorize(Roles = WC.AdminRole)]
     public class ProductController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IProductRepository _prodRepo;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IProductRepository prodRepo, IWebHostEnvironment webHostEnvironment)
         {
-            _db = db;
+            _prodRepo = prodRepo;
             _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Product> objList = _db.Product.Include(u=>u.Category);
+            IEnumerable<Product> objList = _prodRepo.GetAll(incluseProperties : "Category");
             //foreach (var item in objList)
             //{
             //    item.Category = _db.Category.FirstOrDefault(u => u.Id == item.Id);
@@ -47,11 +48,7 @@ namespace Fravin.Controllers
             ProductVM productVM = new ProductVM()
             {
                 Product = new Product(),
-                CategorySelectList = _db.Category.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                })
+                CategorySelectList = _prodRepo.GetAllDropdownList(WC.CategoryName)
             };
             if (id == null || id== 0)
             {
@@ -59,7 +56,7 @@ namespace Fravin.Controllers
             }
             else
             {
-                productVM.Product = _db.Product.Find(id);
+                productVM.Product = _prodRepo.Find(id.GetValueOrDefault());
                 if (productVM.Product == null)
                 {
                     return NotFound();
@@ -88,13 +85,13 @@ namespace Fravin.Controllers
                         files[0].CopyTo(fileStream);
                     }
                     productVM.Product.Image = fileName + extension;
-                    _db.Product.Add(productVM.Product);
+                    _prodRepo.Add(productVM.Product);
                     
                 }
                 else
                 {
                     //updating
-                    var objFromDb = _db.Product.AsNoTracking().FirstOrDefault(u => u.Id == productVM.Product.Id);
+                    var objFromDb = _prodRepo.FirstOrDefault(u => u.Id == productVM.Product.Id, isTracking : false);
                     if (files.Count > 0)
                     {
                         string upload = webRootPath + WC.ImagePath;
@@ -117,14 +114,15 @@ namespace Fravin.Controllers
                     {
                         productVM.Product.Image = objFromDb.Image;
                     }
-                    _db.Product.Update(productVM.Product);
+                    _prodRepo.Update(productVM.Product);
                 }
             }
-            
-            _db.SaveChanges();
+
+            _prodRepo.Save();
             return RedirectToAction("Index");
 
         }
+
         //Get - Delete
         public IActionResult Delete(int? id)
         {
@@ -134,7 +132,7 @@ namespace Fravin.Controllers
             }
             //Product product = _db.Product.Find(id);
             //product.Category =_db.Category.Find(product.CategoryId);
-            Product product = _db.Product.Include(u=>u.Category).FirstOrDefault(u=>u.Id==id);
+            Product product = _prodRepo.FirstOrDefault(u=>u.Id==id,incluseProperties:"Category");
             if (product == null)
             {
                 return NotFound();
@@ -146,7 +144,7 @@ namespace Fravin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
-            var obj = _db.Product.Find(id);
+            var obj = _prodRepo.Find(id.GetValueOrDefault());
             //if (obj==null)
             //{
             // return NotFound();   
@@ -164,8 +162,8 @@ namespace Fravin.Controllers
             {
                 System.IO.File.Delete(oldFile);
             }
-            _db.Product.Remove(obj);
-            _db.SaveChanges();
+            _prodRepo.Remove(obj);
+            _prodRepo.Save();
             return RedirectToAction("Index");
 
 

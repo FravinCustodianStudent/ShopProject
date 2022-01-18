@@ -1,4 +1,6 @@
 using Fravin_DataAccess.Data;
+using Fravin_DataAccess.Repository;
+using Fravin_DataAccess.Repository.IRepository;
 using Fravin_Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -45,6 +47,11 @@ namespace Fravin
                 Option.Cookie.HttpOnly = true;
                 Option.Cookie.IsEssential = true;
             });
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IInquiryHeaderRepository, InquiryHeaderRepository>();
+            services.AddScoped<IInquiryDetailRepository, InquiryDetailRepository>();
+            services.AddScoped<IApplicationUserRepository, AplicationUserRepository>();
             services.AddControllersWithViews();
         }
 

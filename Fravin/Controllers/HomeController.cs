@@ -1,4 +1,5 @@
 ﻿using Fravin_DataAccess.Data;
+using Fravin_DataAccess.Repository.IRepository;
 using Fravin_Models;
 using Fravin_Models.ViewModels;
 using Fravin_Utility;
@@ -16,20 +17,23 @@ namespace Fravin.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _db;
+        private readonly IProductRepository _prodRepo;
+        private readonly ICategoryRepository _catRepo;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db )
+        public HomeController(ILogger<HomeController> logger, IProductRepository prodRepo,
+            ICategoryRepository catRepo)
         {
             _logger = logger;
-            _db = db;
+            _prodRepo = prodRepo;
+            _catRepo = catRepo;
         }
 
         public IActionResult Index()
         {
             HomeVM homeVM = new HomeVM()
             {
-                Products = _db.Product.Include(u => u.Category),
-                Categories =_db.Category
+                Products = _prodRepo.GetAll(incluseProperties:"Category"),
+                Categories =_catRepo.GetAll()
             };
             return View(homeVM);
         }
@@ -44,8 +48,7 @@ namespace Fravin.Controllers
 
             DetailsVM DetailsVM = new DetailsVM()
             {
-                Product = _db.Product.Include(u => u.Category)
-                .FirstOrDefault(u => u.Id == id),
+                Product = _prodRepo.FirstOrDefault(u => u.Id == id,incluseProperties: "Category"),
                 ExistsInCart = false
             };
             foreach (var item in shoppingCartList)
