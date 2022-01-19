@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Fravin.Controllers
 {
-    [Authorize(WC.AdminRole)]
+    [Authorize(Roles=WC.AdminRole)]
     public class InquiryController : Controller
     {
         private readonly IInquiryHeaderRepository _inqHRepo;

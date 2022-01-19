@@ -5,6 +5,10 @@ namespace Fravin_Models
 {
     public class Product
     {
+        public Product()
+        {
+            TempAmount = 1;
+        }
         [Key]
         public int Id { get; set; }
         [Required]
@@ -18,5 +22,9 @@ namespace Fravin_Models
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+
+        [NotMapped]
+        [Range(1,10000, ErrorMessage = "Amount must be greater than 0.")]
+        public int TempAmount { get; set; }
     }
 }

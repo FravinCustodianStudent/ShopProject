@@ -36,7 +36,7 @@
                                         <label>Phone</label>
                                     </div>
                                     <div class="col-9">
-                                       <input asp-for="@Model.ApplicationUser.PhoneNumber" type="text" class="form-control" />
+                                       <input asp-for="@Model.ApplicationUser.PhoneNumber" required type="text" class="form-control" />
                                         <span asp-validation-for="ApplicationUser.PhoneNumber" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -45,10 +45,49 @@
                                         <label>Email</label>
                                     </div>
                                     <div class="col-9">
-                                        <input asp-for="@Model.ApplicationUser.Email" type="text" class="form-control" />
+                                        <input asp-for="@Model.ApplicationUser.Email" required type="text" class="form-control" />
                                         <span asp-validation-for="ApplicationUser.Email" class="text-danger"></span>
                                     </div>
                                 </div>
+                                @if (User.IsInRole(Fravin_Utility.WC.AdminRole))
+                                {
+                                     <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>Street Address</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="@Model.ApplicationUser.StreetAddress" type="text" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.StreetAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                 <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>City</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="@Model.ApplicationUser.City" type="text" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.City" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                 <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>State</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="@Model.ApplicationUser.State" type="text" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.State" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                 <div class="row my-1">
+                                    <div class="col-3">
+                                        <label>PostalCode</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input asp-for="@Model.ApplicationUser.PostalCode" type="text" class="form-control" />
+                                        <span asp-validation-for="ApplicationUser.PostalCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                }
                             </div>
                             <div class="col-12 col-lg-5 row">
                                 <div class="col-12">
@@ -56,6 +95,7 @@
                                         <span class="text-info">Summary:</span>
                                     </h4>
                                     <ul class="list-group mb-3">
+                                        @{var orderTotal = 0.0;}
                                         @for(int i=0;i<Model.ProductList.Count();i++)
                                         {
                                             <input type="hidden" asp-for="@Model.ProductList[i].Id">
@@ -63,9 +103,31 @@
                                             <li class="list-group-item d-flex justify-content-between">
                                             <div>
                                                 <h6 class="my-0">@Model.ProductList[i].Name</h6>
-                                                <small class="text-muted">Price :@Model.ProductList[i].Price UAN</small>
+                                                    @if (User.IsInRole(Fravin_Utility.WC.AdminRole))
+                                                    {
+                                                        <small class="text-muted">Amount: @Model.ProductList[i].TempAmount</small>
+                                                    }
+                                                    else
+                                                    {
+                                                         <small class="text-muted">Price :@Model.ProductList[i].Price UAN</small>
+                                                    }
+                                                   
                                             </div>
+                                                @if (User.IsInRole(Fravin_Utility.WC.AdminRole))
+                                                {
+                                                <span class="text-muted">@(Model.ProductList[i].Price* Model.ProductList[i].TempAmount) UAN</span>
+
+                                                }
+                                                
                                         </li>
+                                        orderTotal+=Model.ProductList[i].Price* Model.ProductList[i].TempAmount;
+                                        }
+                                        @if (User.IsInRole(Fravin_Utility.WC.AdminRole))
+                                        {
+                                            <li class="list-group-item d-flex justify-content-between bg-light">
+                                                <small class="text-info">Total (UAN)</small>
+                                                <strong class="text-info">₴@orderTotal</strong>
+                                            </li>
                                         }
                                     </ul>
                                 </div>
@@ -75,9 +137,16 @@
                 </div>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="col-12 col-md-5 offset-md-7">
-                            <button type="submit" class="btn btn-primary form-control">Submit Inquiry</button>
-                        </div>
+	                    <div class="col-12 col-md-5 offset-md-7">
+                            @if (User.IsInRole(Fravin_Utility.WC.AdminRole))
+                            {
+	                            <button class="btn btn-success form-control" id="submit-button"Submit Order></button>
+                            }
+                            else
+                            {
+	                            <button type="submit" class="btn btn-primary form-control">Submit Inquiry</button>
+                            }
+	                    </div>
                     </div>
                 </div>
             </div>
