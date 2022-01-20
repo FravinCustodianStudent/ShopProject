@@ -60,6 +60,12 @@ namespace Fravin
 
             services.AddScoped<IOrderHeaderRepository, OrderHeaderRepository>();
             services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+
+            services.AddAuthentication().AddFacebook(Options =>
+            {
+                Options.AppId = "440505847766301";
+                Options.AppSecret = "d1fe62acd34ccaf91b6bc7a1a7aa83c0";
+            });
             services.AddControllersWithViews();
             
         }
