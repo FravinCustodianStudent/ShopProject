@@ -59,31 +59,34 @@
 			}
 		</div>
 	</form>
-	<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-		<p>
-			By clicking <em>Register</em> you agree to our <a href="" target="_blank"> terms of service </a>
-		</p>
-		<hr />
-		<div class="row">
+	@if (!User.IsInRole(WC.AdminRole))
+	{
+		<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
 			<p>
-				@foreach (var provider in Model.ExternalLogins)
-				{
-					@if (provider.Name.ToLower().Contains("facebook"))
-					{
-						<button type="submit" class="btn btn-block facebook-btn form-control"
-						        name="provider" value="@provider.Name"
-						        title="Log in using your @provider.DisplayName account">
-							<i class="fab fa-facebook-square"></i> @provider.DisplayName
-						</button>
-					}
-					else
-					{
-						<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-					}
-				}
+				By clicking <em>Register</em> you agree to our <a href="" target="_blank"> terms of service </a>
 			</p>
-		</div>
-	</form>
+			<hr/>
+			<div class="row">
+				<p>
+					@foreach (var provider in Model.ExternalLogins)
+					{
+						@if (provider.Name.ToLower().Contains("facebook"))
+						{
+							<button type="submit" class="btn btn-block facebook-btn form-control"
+							        name="provider" value="@provider.Name"
+							        title="Log in using your @provider.DisplayName account">
+								<i class="fab fa-facebook-square"></i> @provider.DisplayName
+							</button>
+						}
+						else
+						{
+							<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+						}
+					}
+				</p>
+			</div>
+		</form>
+	}
 </div>
 </div>
 </div>

@@ -123,8 +123,17 @@ namespace Fravin.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (User.IsInRole(WC.AdminRole))
+                        {
+                            TempData[WC.Success] = user.FullName + " has bee register";
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }
+                        
                     }
                 }
                 foreach (var error in result.Errors)
